@@ -1,0 +1,229 @@
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <style>
+        .abc {
+            display: block;
+            margin: auto;
+
+        }
+    </style>
+    <style>
+        #loader {
+            border: 12px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 12px solid #e65959;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .center {
+            position: relative;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 30px;
+            margin: auto;
+        }
+    </style>
+
+
+
+    <title></title>
+</head>
+
+<body>
+    <section id="home">
+      <div>
+<p>
+    <h3 style="text-align: center;color: #ff7171;">RESTAURANTS</h3>
+</p>
+</div>
+
+        <input type="text" name=" " id="myInput" placeholder="enter your Pincode..." style="width:80%; margin-left:10%; margin-right:10%;" onkeyup="searchFun()">
+        <div style="height: 20px;"></div>
+ 
+        
+ 
+      
+      <div class="table-responsive"style="width:80%; margin-left:10%; margin-right:10%;">
+         <table class="table table-bordered  table-hover" style="text-align:center;font-family:tahoma" id="myTable">
+             <thead>
+               <th>sno</th>
+               <th>Name</th>
+               <th>Contact</th>
+               <th>Adress</th>
+               <th>City</th>
+               <th>State</th>
+               <th>Pincode</th>
+             </thead>
+             <tbody id="tbody1">
+                <th colspan=10 style="padding-left: 48%;">
+                    <p class="loader1" id="loader" class="center"style="align-items: center;"></p>
+                </th>
+                
+             </tbody>
+           </table>
+        </div>
+ 
+           <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script> 
+ <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries --> 
+ <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+ 
+ <script id="MainScript">
+ 
+ 
+ 
+ 
+ 
+     // Your web app's Firebase configuration
+     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAoJ3YS4KeB3XGQMTH6ZCv3i6qcRsvzj9Q",
+  authDomain: "foodresources.firebaseapp.com",
+  databaseURL: "https://foodresources-default-rtdb.firebaseio.com",
+  projectId: "foodresources",
+  storageBucket: "foodresources.appspot.com",
+  messagingSenderId: "550491183569",
+  appId: "1:550491183569:web:b3f736e9061a5b75c9a8f0",
+  measurementId: "G-M8GCLR0CZ2"
+};
+     // Initialize Firebase
+     firebase.initializeApp(firebaseConfig);
+     firebase.analytics(); 
+   
+     function SelectAllData(){
+         firebase.database().ref('/19oHvPS0DhDN8p8qnvdlASPGlI5YKNxEiGEJcVPkjI4Q').child("Form Responses 1").once('value',
+         function(AllRecords){
+            document.getElementById("tbody1").innerHTML = "";
+         AllRecords.forEach(
+             function(CurrentRecord){
+                 var NAME=CurrentRecord.val().NAME;
+                 var CONTACT=CurrentRecord.val().CONTACT;
+                 var ADDRESS=CurrentRecord.val().ADDRESS;
+                 var CITY=CurrentRecord.val().CITY;
+                 var STATE=CurrentRecord.val().STATE;
+                 var PINCODE=CurrentRecord.val().PINCODE
+
+
+
+                 AddItemsToTable(NAME,CONTACT,ADDRESS,CITY,STATE,PINCODE);
+   
+             }
+         );});
+     }
+   
+     window.onload=SelectAllData;
+   
+   
+   
+     var stdno=0;
+     function AddItemsToTable(NAME,CONTACT,ADDRESS,CITY,STATE,PINCODE){
+       var tbody=document.getElementById('tbody1');
+       var trow=document.createElement('tr');
+       var td1=document.createElement('td');
+       var td2=document.createElement('td');
+       var td3=document.createElement('td');
+       var td4=document.createElement('td');
+       var td5=document.createElement('td');
+       var td6=document.createElement('td');
+       var td8=document.createElement('td');
+
+
+       var td7=document.createElement('td');
+       var td9=document.createElement('td');
+
+       var td10=document.createElement('td');
+
+       
+
+   
+       td1.innerHTML=++stdno;
+       td2.innerHTML=NAME;
+       td3.innerHTML=CONTACT;
+       td4.innerHTML=ADDRESS;
+       td5.innerHTML=CITY;
+       td6.innerHTML=STATE;
+       td7.innerHTML=PINCODE;
+
+   
+       trow.appendChild(td1);
+       trow.appendChild(td2);
+       trow.appendChild(td3);
+       trow.appendChild(td4);
+       trow.appendChild(td5);
+       trow.appendChild(td6);
+       trow.appendChild(td7);
+
+   
+       tbody.appendChild(trow);
+   
+   
+   
+     }
+   
+   
+   
+   
+   
+   
+       </script>
+       <script>
+         const searchFun=()=>{
+             let filter=document.getElementById('myInput').value.toUpperCase();
+             let myTable=document.getElementById('myTable');
+             let tr=myTable.getElementsByTagName('tr');
+             for(var i=0;i<tr.length;i++){
+                 let td= tr[i].getElementsByTagName('td')[9];
+                 if(td){
+                     let textvalue=td.textContent || td.innerHTML;
+                     if(textvalue.toUpperCase().indexOf(filter)>-1){
+                         tr[i].style.display="";
+                     }else{
+                         tr[i].style.display="none";
+                     }
+                 }
+             }
+         }
+      </script>
+ 
+
+
+        <script>
+            function refreshPage() {
+                window.location.reload();
+            }
+</script>
+</script>
+
+
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>
+</section>
+</body>
+
+</html>
